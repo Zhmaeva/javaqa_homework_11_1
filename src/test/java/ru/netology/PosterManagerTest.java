@@ -31,8 +31,23 @@ public class PosterManagerTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    // тест, когда в менеджере меньше фильмов, чем предустановленный лимит 5.
     @Test
-    public void shouldFindLastItems() {
+    public void shouldFindLastItemsWhenPresetLimitMoreElementsAmount() {
+        PosterManager manager = new PosterManager();
+        manager.addPoster(poster_1);
+        manager.addPoster(poster_3);
+        manager.addPoster(poster_4);
+
+        PosterItem[] expected = {poster_4, poster_3, poster_1};
+        PosterItem[] actual = manager.findLast();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    // тест, когда в менеджере фильмов больше чем предустановленный лимит 5
+    @Test
+    public void shouldFindLastItemsPresetLimit() {
         PosterManager manager = new PosterManager();
         manager.addPoster(poster_1);
         manager.addPoster(poster_2);
@@ -48,20 +63,45 @@ public class PosterManagerTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    // тест, когда в менеджере количество фильмов равно лимиту
     @Test
-    public void shouldFindLastItemsWithLength() {
+    public void shouldFindLastItemsSetLimitEqualElementsAmount() {
         PosterManager manager = new PosterManager(3);
         manager.addPoster(poster_1);
         manager.addPoster(poster_2);
         manager.addPoster(poster_3);
-        manager.addPoster(poster_4);
-        manager.addPoster(poster_5);
-        manager.addPoster(poster_6);
-        manager.addPoster(poster_7);
 
-        PosterItem[] expected = {poster_7, poster_6, poster_5};
+        PosterItem[] expected = {poster_3, poster_2, poster_1};
         PosterItem[] actual = manager.findLast();
 
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    // тест когда в менеджере фильмов меньше чем лимит
+    @Test
+    public void shouldFindLastItemsWithLimitMoreElementsAmount() {
+        PosterManager manager = new PosterManager(6);
+        manager.addPoster(poster_1);
+        manager.addPoster(poster_2);
+
+        PosterItem[] expected = {poster_2, poster_1};
+        PosterItem[] actual = manager.findLast();
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    // тест когда установленный лимит равен нулю
+    @Test
+    public void shouldFindLastElementsWithZeroLimit() {
+        PosterManager manager = new PosterManager(0);
+        manager.addPoster(poster_7);
+        manager.addPoster(poster_6);
+        manager.addPoster(poster_6);
+
+        PosterItem[] expected = {};
+        PosterItem[] actual = manager.findLast();
+
+        Assertions.assertArrayEquals(expected, actual);
+
     }
 }
