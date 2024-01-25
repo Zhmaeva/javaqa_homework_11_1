@@ -4,6 +4,15 @@ import ru.netology.domain.PosterItem;
 
 public class PosterManager {
     private PosterItem[] allPosters = new PosterItem[0];
+    private int posterLimit;
+
+    public PosterManager() {
+        this.posterLimit = 5;
+    }
+
+    public PosterManager(int limit) {
+        this.posterLimit = limit;
+    }
 
     // добавление фильма
     public void addPoster(PosterItem item) {
@@ -27,10 +36,10 @@ public class PosterManager {
         return posters;
     }
 
-    // вывод 5 последних добавленных фильмов в обратном от добавления порядке
+     //вывод 5 последних добавленных фильмов в обратном от добавления порядке
     public PosterItem[] findLast() {
         PosterItem[] posters = allPosters;
-        PosterItem[] lastPosters = new PosterItem[Math.min(posters.length, 5)];
+        PosterItem[] lastPosters = new PosterItem[Math.min(posters.length, posterLimit)];
         for (int i = 0; i < lastPosters.length; i++) {
             lastPosters[i] = posters[posters.length - i - 1];
         }
@@ -38,7 +47,9 @@ public class PosterManager {
         return lastPosters;
     }
 
-    // вывод установленного лимит* штук последних добавленных фильмов в обратном порядке
+    /*
+    // Использование методов без конструктора в менеджере:
+    //вывод установленного лимит* штук последних добавленных фильмов в обратном порядке
     public PosterItem[] findLast(int length) {
         PosterItem[] posters = allPosters;
         PosterItem[] lastPosters = new PosterItem[Math.min(posters.length, length)];
@@ -48,4 +59,11 @@ public class PosterManager {
 
         return lastPosters;
     }
+
+    // вывод 5 последних фильмов в обратном порядке
+    public PosterItem[] findLast() {
+        return this.findLast(5);
+    }
+    */
+
 }
